@@ -12,61 +12,62 @@
  */
 package org.assertj.neo4j.api.propertycontainer;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.neo4j.graphdb.PropertyContainer;
-
-import static org.assertj.neo4j.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.neo4j.graphdb.Entity;
+
 /**
  * Checks <code>{@link org.assertj.neo4j.api.PropertyContainerAssert#hasPropertyKey(String)}</code> behavior.
- * 
+ *
  * @author Florent Biville
  */
 public class PropertyContainerAssert_hasPropertyKey_Test {
 
-  @Rule
-  public ExpectedException expectedException = none();
+    @Rule
+    public ExpectedException expectedException = none();
 
-  private PropertyContainer propertyContainer = mock(PropertyContainer.class);
+    private Entity propertyContainer = mock( Entity.class );
 
-  @Test
-  public void should_pass_when_property_container_has_key() {
-    given_a_property_container_with_key("spacemonKey");
+    @Test
+    public void should_pass_when_property_container_has_key() {
+        given_a_property_container_with_key( "spacemonKey" );
 
-    assertThat(propertyContainer).hasPropertyKey("spacemonKey");
-  }
+        assertThat( this.propertyContainer ).hasPropertyKey( "spacemonKey" );
+    }
 
-  @Test
-  public void should_fail_when_given_property_container_is_null() {
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage("Expecting actual not to be null");
+    @Test
+    public void should_fail_when_given_property_container_is_null() {
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( "Expecting actual not to be null" );
 
-    assertThat((PropertyContainer) null).hasPropertyKey("keyToHappiness");
-  }
+        assertThat( ( Entity ) null ).hasPropertyKey( "keyToHappiness" );
+    }
 
-  @Test
-  public void should_fail_when_property_container_does_NOT_have_property() {
-    expectedException.expect(AssertionError.class);
+    @Test
+    public void should_fail_when_property_container_does_NOT_have_property() {
+        this.expectedException.expect( AssertionError.class );
 
-    given_a_property_container_with_key("spacemonKey");
+        given_a_property_container_with_key( "spacemonKey" );
 
-    assertThat(propertyContainer).hasPropertyKey("arcticmonKey");
-  }
+        assertThat( this.propertyContainer ).hasPropertyKey( "arcticmonKey" );
+    }
 
-  @Test
-  public void should_fail_when_given_property_key_is_null() {
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("The key to look for should not be null");
+    @Test
+    public void should_fail_when_given_property_key_is_null() {
+        this.expectedException.expect( IllegalArgumentException.class );
+        this.expectedException.expectMessage( "The key to look for should not be null" );
 
-    assertThat(propertyContainer).hasPropertyKey(null);
-  }
+        assertThat( this.propertyContainer ).hasPropertyKey( null );
+    }
 
-  private void given_a_property_container_with_key(String nodeKey) {
-    when(propertyContainer.hasProperty(nodeKey)).thenReturn(true);
-  }
+    private void given_a_property_container_with_key( final String nodeKey ) {
+        when( this.propertyContainer.hasProperty( nodeKey ) ).thenReturn( true );
+    }
 }

@@ -12,67 +12,68 @@
  */
 package org.assertj.neo4j.api.propertycontainer;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.neo4j.graphdb.PropertyContainer;
-
-import static org.assertj.neo4j.api.Assertions.assertThat;
 import static org.junit.rules.ExpectedException.none;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.neo4j.graphdb.Entity;
+
 /**
  * Checks <code>{@link org.assertj.neo4j.api.PropertyContainerAssert#hasProperty(String,Object)}</code> behavior.
- * 
+ *
  * @author Florent Biville
  */
 public class PropertyContainerAssert_hasProperty_Test {
 
-  @Rule
-  public ExpectedException expectedException = none();
+    @Rule
+    public ExpectedException expectedException = none();
 
-  private PropertyContainer propertyContainer = mock(PropertyContainer.class);
+    private Entity propertyContainer = mock( Entity.class );
 
-  @Test
-  public void should_pass_when_property_container_has_property() {
-    given_property_container_with_property("name", "Emil Eifrem");
+    @Test
+    public void should_pass_when_property_container_has_property() {
+        given_property_container_with_property( "name", "Emil Eifrem" );
 
-    assertThat(propertyContainer).hasProperty("name", "Emil Eifrem");
-  }
+        assertThat( this.propertyContainer ).hasProperty( "name", "Emil Eifrem" );
+    }
 
-  @Test
-  public void should_fail_when_given_property_key_is_null() {
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("The key to look for should not be null");
+    @Test
+    public void should_fail_when_given_property_key_is_null() {
+        this.expectedException.expect( IllegalArgumentException.class );
+        this.expectedException.expectMessage( "The key to look for should not be null" );
 
-    given_property_container_with_property("name", "Emil Eifrem");
+        given_property_container_with_property( "name", "Emil Eifrem" );
 
-    assertThat(propertyContainer).hasProperty(null, "Emil Eifrem");
-  }
+        assertThat( this.propertyContainer ).hasProperty( null, "Emil Eifrem" );
+    }
 
-  @Test
-  public void should_fail_when_given_property_value_is_null() {
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("The value to look for should not be null");
+    @Test
+    public void should_fail_when_given_property_value_is_null() {
+        this.expectedException.expect( IllegalArgumentException.class );
+        this.expectedException.expectMessage( "The value to look for should not be null" );
 
-    given_property_container_with_property("name", "Emil Eifrem");
+        given_property_container_with_property( "name", "Emil Eifrem" );
 
-    assertThat(propertyContainer).hasProperty("name", null);
-  }
+        assertThat( this.propertyContainer ).hasProperty( "name", null );
+    }
 
-  @Test
-  public void should_fail_when_property_container_has_expected_key_but_not_same_value() {
-    expectedException.expect(AssertionError.class);
+    @Test
+    public void should_fail_when_property_container_has_expected_key_but_not_same_value() {
+        this.expectedException.expect( AssertionError.class );
 
-    given_property_container_with_property("name", "Emil Eifrem");
+        given_property_container_with_property( "name", "Emil Eifrem" );
 
-    assertThat(propertyContainer).hasProperty("name", "Peter Neubauer");
-  }
+        assertThat( this.propertyContainer ).hasProperty( "name", "Peter Neubauer" );
+    }
 
-  private void given_property_container_with_property(String key, String value) {
-    when(propertyContainer.hasProperty(key)).thenReturn(true);
-    when(propertyContainer.getProperty(key, null)).thenReturn(value);
-  }
+    private void given_property_container_with_property( final String key, final String value ) {
+        when( this.propertyContainer.hasProperty( key ) ).thenReturn( true );
+        when( this.propertyContainer.getProperty( key, null ) ).thenReturn( value );
+    }
 
 }

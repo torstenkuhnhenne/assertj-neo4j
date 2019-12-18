@@ -12,9 +12,9 @@
  */
 package org.assertj.neo4j.api;
 
+import org.neo4j.graphdb.Entity;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
-import org.neo4j.graphdb.PropertyContainer;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.schema.ConstraintDefinition;
@@ -28,38 +28,38 @@ import org.neo4j.graphdb.schema.IndexDefinition;
  */
 public class Assertions implements InstanceOfAssertFactories {
 
-  public static <T extends PropertyContainer> PropertyContainerAssert<?, T> assertThat(T propertyContainer) {
-    return new PropertyContainerAssert<>(propertyContainer, PropertyContainerAssert.class);
-  }
+    public static <T extends Entity> PropertyContainerAssert<?,T> assertThat( final T propertyContainer ) {
+        return new PropertyContainerAssert<>( propertyContainer, PropertyContainerAssert.class );
+    }
 
-  public static NodeAssert assertThat(Node node) {
-    return new NodeAssert(node);
-  }
+    public static NodeAssert assertThat( final Node node ) {
+        return new NodeAssert( node );
+    }
 
-  public static RelationshipAssert assertThat(Relationship relationship) {
-    return new RelationshipAssert(relationship);
-  }
+    public static RelationshipAssert assertThat( final Relationship relationship ) {
+        return new RelationshipAssert( relationship );
+    }
 
-  public static PathAssert assertThat(Path path) {
-    return new PathAssert(path);
-  }
+    public static PathAssert assertThat( final Path path ) {
+        return new PathAssert( path );
+    }
 
-  public static ResultAssert assertThat(Result result) {
-    return new ResultAssert(result);
-  }
+    public static ResultAssert assertThat( final Result result ) {
+        return new ResultAssert( result );
+    }
 
-  public static ConstraintDefinitionAssert assertThat(ConstraintDefinition constraintDefinition) {
-    return new ConstraintDefinitionAssert(constraintDefinition);
-  }
+    public static ConstraintDefinitionAssert assertThat( final ConstraintDefinition constraintDefinition ) {
+        return new ConstraintDefinitionAssert( constraintDefinition );
+    }
 
-  public static IndexDefinitionAssert assertThat(IndexDefinition indexDefinition) {
-    return new IndexDefinitionAssert(indexDefinition);
-  }
+    public static IndexDefinitionAssert assertThat( final IndexDefinition indexDefinition ) {
+        return new IndexDefinitionAssert( indexDefinition );
+    }
 
-  /**
-   * Creates a new </code>{@link Assertions}</code>.
-   */
-  protected Assertions() {
-    // empty
-  }
+    /**
+     * Creates a new </code>{@link Assertions}</code>.
+     */
+    protected Assertions() {
+        // empty
+    }
 }

@@ -12,16 +12,19 @@
  */
 package org.assertj.neo4j.api.indexdefinition;
 
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import java.util.Collections;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.schema.IndexDefinition;
-
-import static org.assertj.neo4j.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Checks <code>{@link org.assertj.neo4j.api.IndexDefinitionAssert#doesNotHaveLabel(String)}</code> behavior.
@@ -32,44 +35,44 @@ import static org.mockito.Mockito.when;
 
 public class IndexDefinitionAssert_doesNotHaveLabel_represented_as_string_Test {
 
-  @Rule
-  public ExpectedException expectedException = ExpectedException.none();
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
-  private IndexDefinition indexDefinition = mock(IndexDefinition.class);
+    private IndexDefinition indexDefinition = mock( IndexDefinition.class );
 
-  @Test
-  public void should_pass_if_index_definition_does_not_have_label() {
-    given_index_definition_with_label("Captain Marvel");
+    @Test
+    public void should_pass_if_index_definition_does_not_have_label() {
+        given_index_definition_with_label( "Captain Marvel" );
 
-    assertNotNull(assertThat(indexDefinition).doesNotHaveLabel("Nebula"));
-  }
+        assertNotNull( assertThat( this.indexDefinition ).doesNotHaveLabel( "Nebula" ) );
+    }
 
-  @Test
-  public void should_fail_if_index_definition_is_null() {
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage("Expecting actual not to be null");
+    @Test
+    public void should_fail_if_index_definition_is_null() {
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( "Expecting actual not to be null" );
 
-    assertThat((IndexDefinition) null).doesNotHaveLabel("Thanos");
-  }
+        assertThat( ( IndexDefinition ) null ).doesNotHaveLabel( "Thanos" );
+    }
 
-  @Test
-  public void should_fail_if_label_value_is_null() {
-    expectedException.expect(IllegalArgumentException.class);
+    @Test
+    public void should_fail_if_label_value_is_null() {
+        this.expectedException.expect( IllegalArgumentException.class );
 
-    assertThat(indexDefinition).doesNotHaveLabel((String) null);
-  }
+        assertThat( this.indexDefinition ).doesNotHaveLabel( ( String ) null );
+    }
 
-  @Test
-  public void should_fail_if_index_definition_does_have_label() {
-    expectedException.expect(AssertionError.class);
+    @Test
+    public void should_fail_if_index_definition_does_have_label() {
+        this.expectedException.expect( AssertionError.class );
 
-    given_index_definition_with_label("Rocket Raccoon");
+        given_index_definition_with_label( "Rocket Raccoon" );
 
-    assertThat(indexDefinition).doesNotHaveLabel("Rocket Raccoon");
-  }
+        assertThat( this.indexDefinition ).doesNotHaveLabel( "Rocket Raccoon" );
+    }
 
-  private void given_index_definition_with_label(String value) {
-    Label label = Label.label(value);
-    when(indexDefinition.getLabel()).thenReturn(label);
-  }
+    private void given_index_definition_with_label( final String value ) {
+        final Label label = Label.label( value );
+        when( this.indexDefinition.getLabels() ).thenReturn( Collections.singleton( label ) );
+    }
 }

@@ -12,24 +12,18 @@
  */
 package org.assertj.neo4j.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.neo4j.api.InstanceOfAssertFactories.CONSTRAINT_DEFINITION;
-import static org.assertj.neo4j.api.InstanceOfAssertFactories.INDEX_DEFINITION;
-import static org.assertj.neo4j.api.InstanceOfAssertFactories.NODE;
-import static org.assertj.neo4j.api.InstanceOfAssertFactories.PATH;
-import static org.assertj.neo4j.api.InstanceOfAssertFactories.RELATIONSHIP;
-import static org.assertj.neo4j.api.InstanceOfAssertFactories.RESULT;
 import static org.assertj.neo4j.api.InstanceOfAssertFactories.propertyContainer;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.mock;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.neo4j.graphdb.Entity;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
-import org.neo4j.graphdb.PropertyContainer;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.schema.ConstraintDefinition;
@@ -41,69 +35,69 @@ import org.neo4j.graphdb.schema.IndexDefinition;
  */
 public class InstanceOfAssertFactoriesTest {
 
-  @Test
-  public void property_container_factory_should_allow_property_container_assertions() {
-    Object value = mock(PropertyContainer.class);
+    @Test
+    public void property_container_factory_should_allow_property_container_assertions() {
+        final Object value = mock( Entity.class );
 
-    PropertyContainerAssert<?, PropertyContainer> result = assertThat(value).asInstanceOf(propertyContainer(PropertyContainer.class));
+        final PropertyContainerAssert<?,Entity> result = assertThat( value ).asInstanceOf( propertyContainer( Entity.class ) );
 
-    result.doesNotHavePropertyKey("key");
-  }
+        result.doesNotHavePropertyKey( "key" );
+    }
 
-  @Test
-  public void node_factory_should_allow_node_assertions() {
-    Object value = mock(Node.class);
+    @Test
+    public void node_factory_should_allow_node_assertions() {
+        final Object value = mock( Node.class );
 
-    NodeAssert result = assertThat(value).asInstanceOf(NODE);
+        final NodeAssert result = assertThat( value ).asInstanceOf( InstanceOfAssertFactories.NODE );
 
-    result.doesNotHaveLabel(Label.label("label"));
-  }
+        result.doesNotHaveLabel( Label.label( "label" ) );
+    }
 
-  @Test
-  public void relationship_factory_should_allow_relationship_assertions() {
-    Object value = mock(Relationship.class, RETURNS_MOCKS);
+    @Test
+    public void relationship_factory_should_allow_relationship_assertions() {
+        final Object value = mock( Relationship.class, Mockito.RETURNS_MOCKS );
 
-    RelationshipAssert result = assertThat(value).asInstanceOf(RELATIONSHIP);
+        final RelationshipAssert result = assertThat( value ).asInstanceOf( InstanceOfAssertFactories.RELATIONSHIP );
 
-    result.doesNotHaveType("type");
-  }
+        result.doesNotHaveType( "type" );
+    }
 
-  @Test
-  public void path_factory_should_allow_path_assertions() {
-    Object value = mock(Path.class);
+    @Test
+    public void path_factory_should_allow_path_assertions() {
+        final Object value = mock( Path.class );
 
-    PathAssert result = assertThat(value).asInstanceOf(PATH);
+        final PathAssert result = assertThat( value ).asInstanceOf( InstanceOfAssertFactories.PATH );
 
-    result.hasLength(0);
-  }
+        result.hasLength( 0 );
+    }
 
-  @Test
-  public void result_factory_should_allow_result_assertions() {
-    Object value = mock(Result.class);
+    @Test
+    public void result_factory_should_allow_result_assertions() {
+        final Object value = mock( Result.class );
 
-    ResultAssert result = assertThat(value).asInstanceOf(RESULT);
+        final ResultAssert result = assertThat( value ).asInstanceOf( InstanceOfAssertFactories.RESULT );
 
-    result.isEmpty();
-  }
+        result.isEmpty();
+    }
 
-  @SuppressWarnings("CastCanBeRemovedNarrowingVariableType")
-  @Test
-  public void constraint_definition_factory_should_allow_constraint_definition_assertions() {
-    Object value = mock(ConstraintDefinition.class, RETURNS_DEEP_STUBS);
-    given(((ConstraintDefinition) value).getLabel().name()).willReturn("label");
+    @SuppressWarnings("CastCanBeRemovedNarrowingVariableType")
+    @Test
+    public void constraint_definition_factory_should_allow_constraint_definition_assertions() {
+        final Object value = mock( ConstraintDefinition.class, Mockito.RETURNS_DEEP_STUBS );
+        given( ( ( ConstraintDefinition ) value ).getLabel().name() ).willReturn( "label" );
 
-    ConstraintDefinitionAssert result = assertThat(value).asInstanceOf(CONSTRAINT_DEFINITION);
+        final ConstraintDefinitionAssert result = assertThat( value ).asInstanceOf( InstanceOfAssertFactories.CONSTRAINT_DEFINITION );
 
-    result.hasLabel("label");
-  }
+        result.hasLabel( "label" );
+    }
 
-  @Test
-  public void index_definition_factory_should_allow_index_definition_assertions() {
-    Object value = mock(IndexDefinition.class, RETURNS_MOCKS);
+    @Test
+    public void index_definition_factory_should_allow_index_definition_assertions() {
+        final Object value = mock( IndexDefinition.class, Mockito.RETURNS_MOCKS );
 
-    IndexDefinitionAssert result = assertThat(value).asInstanceOf(INDEX_DEFINITION);
+        final IndexDefinitionAssert result = assertThat( value ).asInstanceOf( InstanceOfAssertFactories.INDEX_DEFINITION );
 
-    result.doesNotHaveLabel("label");
-  }
+        result.doesNotHaveLabel( "label" );
+    }
 
 }

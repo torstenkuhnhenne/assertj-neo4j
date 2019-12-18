@@ -15,24 +15,24 @@ package org.assertj.neo4j.error;
 import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 import org.assertj.core.internal.StandardComparisonStrategy;
-import org.neo4j.graphdb.PropertyContainer;
+import org.neo4j.graphdb.Entity;
 
 public class ShouldHaveProperty extends BasicErrorMessageFactory {
 
-  /**
-   * Creates a new </code>{@link ShouldHaveProperty}</code>.
-   * 
-   * @param actual the actual value in the failed assertion.
-   * @param key the key used in the failed assertion to compare the actual property key to.
-   * @param value the value used in the failed assertion to compare the actual property value to.
-   * @return the created {@code ErrorMessageFactory}.
-   */
-  public static ErrorMessageFactory shouldHaveProperty(PropertyContainer actual, String key, Object value) {
-    return new ShouldHaveProperty(actual, key, value);
-  }
+    /**
+     * Creates a new </code>{@link ShouldHaveProperty}</code>.
+     *
+     * @param actual the actual value in the failed assertion.
+     * @param key the key used in the failed assertion to compare the actual property key to.
+     * @param value the value used in the failed assertion to compare the actual property value to.
+     * @return the created {@code ErrorMessageFactory}.
+     */
+    public static ErrorMessageFactory shouldHaveProperty( final Entity actual, final String key, final Object value ) {
+        return new ShouldHaveProperty( actual, key, value );
+    }
 
-  private ShouldHaveProperty(PropertyContainer actual, String key, Object value) {
-    super("\nExpecting:\n  <%s>\nto have property with key:\n  <%s>\nand value:\n  <%s>\n%s", actual, key, value,
-        StandardComparisonStrategy.instance());
-  }
+    private ShouldHaveProperty( final Entity actual, final String key, final Object value ) {
+        super( "\nExpecting:\n  <%s>\nto have property with key:\n  <%s>\nand value:\n  <%s>\n%s", actual, key, value,
+                StandardComparisonStrategy.instance() );
+    }
 }

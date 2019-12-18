@@ -15,23 +15,22 @@ package org.assertj.neo4j.error;
 import org.assertj.core.error.BasicErrorMessageFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 import org.assertj.core.internal.StandardComparisonStrategy;
-import org.neo4j.graphdb.PropertyContainer;
+import org.neo4j.graphdb.Entity;
 
 public class ShouldNotHavePropertyKey extends BasicErrorMessageFactory {
 
-  /**
-   * Creates a new </code>{@link ShouldNotHavePropertyKey}</code>.
-   * 
-   * @param actual the actual value in the failed assertion.
-   * @param key the key used in the failed assertion to compare the actual property key to.
-   * @return the created {@code ErrorMessageFactory}.
-   */
-  public static ErrorMessageFactory shouldNotHavePropertyKey(PropertyContainer actual, String key) {
-    return new ShouldNotHavePropertyKey(actual, key);
-  }
+    /**
+     * Creates a new </code>{@link ShouldNotHavePropertyKey}</code>.
+     *
+     * @param actual the actual value in the failed assertion.
+     * @param key the key used in the failed assertion to compare the actual property key to.
+     * @return the created {@code ErrorMessageFactory}.
+     */
+    public static ErrorMessageFactory shouldNotHavePropertyKey( final Entity actual, final String key ) {
+        return new ShouldNotHavePropertyKey( actual, key );
+    }
 
-  private ShouldNotHavePropertyKey(PropertyContainer actual, String other) {
-    super("\nExpecting:\n  <%s>\nnot to have property key:\n  <%s>\n%s", actual, other, StandardComparisonStrategy
-        .instance());
-  }
+    private ShouldNotHavePropertyKey( final Entity actual, final String other ) {
+        super( "\nExpecting:\n  <%s>\nnot to have property key:\n  <%s>\n%s", actual, other, StandardComparisonStrategy.instance() );
+    }
 }

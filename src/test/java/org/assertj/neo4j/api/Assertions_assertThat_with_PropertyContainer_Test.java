@@ -12,31 +12,32 @@
  */
 package org.assertj.neo4j.api;
 
-import org.junit.Test;
-import org.neo4j.graphdb.PropertyContainer;
-
-import static org.assertj.neo4j.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
+import org.junit.Test;
+import org.neo4j.graphdb.Entity;
+
 /**
- * Tests for <code>{@link Assertions#assertThat(PropertyContainer)}</code>
- * 
+ * Tests for <code>{@link Assertions#assertThat(Entity)}</code>
+ *
  * @author Florent Biville
  */
 public class Assertions_assertThat_with_PropertyContainer_Test {
 
-  @Test
-  public void should_create_Assert() {
-    PropertyContainerAssert propertyContainerAssert = assertThat(mock(PropertyContainer.class));
-    assertNotNull(propertyContainerAssert);
-  }
+    @Test
+    public void should_create_Assert() {
+        final PropertyContainerAssert propertyContainerAssert = assertThat( mock( Entity.class ) );
+        assertNotNull( propertyContainerAssert );
+    }
 
-  @Test
-  public void should_pass_actual() {
-    PropertyContainer propertyContainer = mock(PropertyContainer.class);
-    PropertyContainerAssert propertyContainerAssert = assertThat(propertyContainer);
-    assertSame(propertyContainer, propertyContainerAssert.getActual());
-  }
+    @Test
+    public void should_pass_actual() {
+        final Entity propertyContainer = mock( Entity.class );
+        final PropertyContainerAssert propertyContainerAssert = assertThat( propertyContainer );
+        assertSame( propertyContainer, propertyContainerAssert.getActual() );
+    }
 }
