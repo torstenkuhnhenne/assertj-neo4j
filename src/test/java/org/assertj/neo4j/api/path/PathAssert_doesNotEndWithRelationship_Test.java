@@ -12,74 +12,73 @@
  */
 package org.assertj.neo4j.api.path;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.neo4j.graphdb.Path;
 import org.neo4j.graphdb.Relationship;
 
-import static org.assertj.neo4j.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
- * Checks <code>{@link org.assertj.neo4j.api.PathAssert#doesNotEndWithRelationship(Relationship)}</code>
- * behavior.
+ * Checks <code>{@link org.assertj.neo4j.api.PathAssert#doesNotEndWithRelationship(Relationship)}</code> behavior.
  *
  * @author Florent Biville
  */
 public class PathAssert_doesNotEndWithRelationship_Test {
 
-  @Rule
-  public ExpectedException expectedException = ExpectedException.none();
-  private Path path = mock(Path.class);
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+    private Path path = mock( Path.class );
 
-  @Test
-  public void should_fail_if_path_ends_with_relationship() {
-    Relationship relationship = mock(Relationship.class);
-    given_path_last_relationship(relationship);
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage(String.format("Expecting:%n"));
-    expectedException.expectMessage(String.format("%nto not end with relationship:%n"));
+    public void should_fail_if_path_ends_with_relationship() {
+        final Relationship relationship = mock( Relationship.class );
+        given_path_last_relationship( relationship );
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( String.format( "Expecting:%n" ) );
+        this.expectedException.expectMessage( String.format( "%nto not end with relationship:%n" ) );
 
-    assertThat(path).doesNotEndWithRelationship(relationship);
-  }
+        assertThat( this.path ).doesNotEndWithRelationship( relationship );
+    }
 
-  @Test
-  public void should_fail_if_path_is_null() {
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage("Expecting actual not to be null");
+    @Test
+    public void should_fail_if_path_is_null() {
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( "Expecting actual not to be null" );
 
-    assertThat((Path) null).doesNotEndWithRelationship(mock(Relationship.class));
-  }
+        assertThat( ( Path ) null ).doesNotEndWithRelationship( mock( Relationship.class ) );
+    }
 
-  @Test
-  public void should_fail_if_path_last_relationship_is_null() {
-    expectedException.expect(IllegalStateException.class);
-    expectedException.expectMessage("The actual last relationship should not be null");
+    @Test
+    public void should_fail_if_path_last_relationship_is_null() {
+        this.expectedException.expect( IllegalStateException.class );
+        this.expectedException.expectMessage( "The actual last relationship should not be null" );
 
-    assertThat(path).doesNotEndWithRelationship(mock(Relationship.class));
-  }
+        assertThat( this.path ).doesNotEndWithRelationship( mock( Relationship.class ) );
+    }
 
-  @Test
-  public void should_fail_if_given_last_relationship_is_null() {
-    given_path_last_relationship(mock(Relationship.class));
+    @Test
+    public void should_fail_if_given_last_relationship_is_null() {
+        given_path_last_relationship( mock( Relationship.class ) );
 
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("The last relationship to look for should not be null");
+        this.expectedException.expect( IllegalArgumentException.class );
+        this.expectedException.expectMessage( "The last relationship to look for should not be null" );
 
-    assertThat(path).doesNotEndWithRelationship(null);
-  }
+        assertThat( this.path ).doesNotEndWithRelationship( null );
+    }
 
-  @Test
-  public void should_fail_if_path_does_not_end_with_given_relationship() {
-    given_path_last_relationship(mock(Relationship.class));
+    @Test
+    public void should_fail_if_path_does_not_end_with_given_relationship() {
+        given_path_last_relationship( mock( Relationship.class ) );
 
-    assertThat(path).doesNotEndWithRelationship(mock(Relationship.class));
-  }
+        assertThat( this.path ).doesNotEndWithRelationship( mock( Relationship.class ) );
+    }
 
-  private void given_path_last_relationship(Relationship relationship) {
-    when(path.lastRelationship()).thenReturn(relationship);
-  }
+    private void given_path_last_relationship( final Relationship relationship ) {
+        when( this.path.lastRelationship() ).thenReturn( relationship );
+    }
 
 }

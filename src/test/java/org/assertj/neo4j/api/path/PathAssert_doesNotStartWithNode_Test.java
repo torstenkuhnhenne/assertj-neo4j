@@ -12,15 +12,16 @@
  */
 package org.assertj.neo4j.api.path;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Path;
-
-import static org.assertj.neo4j.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Checks <code>{@link org.assertj.neo4j.api.PathAssert#doesNotStartWithNode(Node)}</code> behavior.
@@ -29,57 +30,56 @@ import static org.mockito.Mockito.when;
  */
 public class PathAssert_doesNotStartWithNode_Test {
 
-  @Rule
-  public ExpectedException expectedException = ExpectedException.none();
-  private Path path = mock(Path.class);
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+    private Path path = mock( Path.class );
 
-  @Test
-  public void should_fail_if_path_starts_with_node() {
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage(String.format("Expecting:%n"));
-    expectedException.expectMessage(String.format("%nto not start with node:%n"));
+    public void should_fail_if_path_starts_with_node() {
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( String.format( "Expecting:%n" ) );
+        this.expectedException.expectMessage( String.format( "%nto not start with node:%n" ) );
 
-    Node node = mock(Node.class);
-    given_path_starts_with_node(node);
+        final Node node = mock( Node.class );
+        given_path_starts_with_node( node );
 
-    assertThat(path).doesNotStartWithNode(node);
-  }
+        assertThat( this.path ).doesNotStartWithNode( node );
+    }
 
-  @Test
-  public void should_fail_if_path_is_null() {
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage("Expecting actual not to be null");
+    @Test
+    public void should_fail_if_path_is_null() {
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( "Expecting actual not to be null" );
 
-    assertThat((Path) null).doesNotStartWithNode(mock(Node.class));
-  }
+        assertThat( ( Path ) null ).doesNotStartWithNode( mock( Node.class ) );
+    }
 
-  @Test
-  public void should_fail_if_path_start_node_is_null() {
-    expectedException.expect(IllegalStateException.class);
-    expectedException.expectMessage("The actual start node should not be null");
+    @Test
+    public void should_fail_if_path_start_node_is_null() {
+        this.expectedException.expect( IllegalStateException.class );
+        this.expectedException.expectMessage( "The actual start node should not be null" );
 
-    assertThat(path).doesNotStartWithNode(mock(Node.class));
-  }
+        assertThat( this.path ).doesNotStartWithNode( mock( Node.class ) );
+    }
 
-  @Test
-  public void should_fail_if_given_start_node_is_null() {
-    given_path_starts_with_node(mock(Node.class));
+    @Test
+    public void should_fail_if_given_start_node_is_null() {
+        given_path_starts_with_node( mock( Node.class ) );
 
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("The start node to look for should not be null");
+        this.expectedException.expect( IllegalArgumentException.class );
+        this.expectedException.expectMessage( "The start node to look for should not be null" );
 
-    assertThat(path).doesNotStartWithNode(null);
-  }
+        assertThat( this.path ).doesNotStartWithNode( null );
+    }
 
-  @Test
-  public void should_pass_if_path_does_not_start_with_given_node() {
-    given_path_starts_with_node(mock(Node.class));
+    @Test
+    public void should_pass_if_path_does_not_start_with_given_node() {
+        given_path_starts_with_node( mock( Node.class ) );
 
-    assertThat(path).doesNotStartWithNode(mock(Node.class));
-  }
+        assertThat( this.path ).doesNotStartWithNode( mock( Node.class ) );
+    }
 
-  private void given_path_starts_with_node(Node node) {
-    when(path.startNode()).thenReturn(node);
-  }
+    private void given_path_starts_with_node( final Node node ) {
+        when( this.path.startNode() ).thenReturn( node );
+    }
 
 }

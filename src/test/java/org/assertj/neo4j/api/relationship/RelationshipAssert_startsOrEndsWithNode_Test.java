@@ -12,6 +12,11 @@
  */
 package org.assertj.neo4j.api.relationship;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import static org.assertj.neo4j.api.Assertions.assertThat;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,103 +25,97 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
 
-import static org.assertj.neo4j.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 /**
- * Checks <code>{@link org.assertj.neo4j.api.RelationshipAssert#startsOrEndsWithNode(org.neo4j.graphdb.Node)}</code>
- * behavior.
- * 
+ * Checks <code>{@link org.assertj.neo4j.api.RelationshipAssert#startsOrEndsWithNode(org.neo4j.graphdb.Node)}</code> behavior.
+ *
  * @author Florent Biville
  */
 public class RelationshipAssert_startsOrEndsWithNode_Test {
 
-  @Rule
-  public ExpectedException expectedException = ExpectedException.none();
-  private Relationship relationship = mock(Relationship.class);
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+    private Relationship relationship = mock( Relationship.class );
 
-  @Before
-  public void prepare() throws Exception {
-    when(relationship.getId()).thenReturn(42L);
-    when(relationship.getType()).thenReturn(RelationshipType.withName("SOME_TYPE"));
-  }
+    @Before
+    public void prepare() throws Exception {
+        when( this.relationship.getId() ).thenReturn( 42L );
+        when( this.relationship.getType() ).thenReturn( RelationshipType.withName( "SOME_TYPE" ) );
+    }
 
-  @Test
-  public void should_pass_if_relationship_starts_with_node() {
-    Node node = mock(Node.class);
-    given_relationship_starts_with_node(node);
-    given_relationship_ends_with_node(mock(Node.class));
+    @Test
+    public void should_pass_if_relationship_starts_with_node() {
+        final Node node = mock( Node.class );
+        given_relationship_starts_with_node( node );
+        given_relationship_ends_with_node( mock( Node.class ) );
 
-    assertThat(relationship).startsOrEndsWithNode(node);
-  }
+        assertThat( this.relationship ).startsOrEndsWithNode( node );
+    }
 
-  @Test
-  public void should_pass_if_relationship_ends_with_node() {
-    Node node = mock(Node.class);
-    given_relationship_starts_with_node(mock(Node.class));
-    given_relationship_ends_with_node(node);
+    @Test
+    public void should_pass_if_relationship_ends_with_node() {
+        final Node node = mock( Node.class );
+        given_relationship_starts_with_node( mock( Node.class ) );
+        given_relationship_ends_with_node( node );
 
-    assertThat(relationship).startsOrEndsWithNode(node);
-  }
+        assertThat( this.relationship ).startsOrEndsWithNode( node );
+    }
 
-  @Test
-  public void should_fail_if_relationship_is_null() {
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage("Expecting actual not to be null");
+    @Test
+    public void should_fail_if_relationship_is_null() {
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage( "Expecting actual not to be null" );
 
-    assertThat((Relationship) null).startsOrEndsWithNode(mock(Node.class));
-  }
+        assertThat( ( Relationship ) null ).startsOrEndsWithNode( mock( Node.class ) );
+    }
 
-  @Test
-  public void should_fail_if_relationship_start_node_is_null() {
-    given_relationship_ends_with_node(mock(Node.class));
+    @Test
+    public void should_fail_if_relationship_start_node_is_null() {
+        given_relationship_ends_with_node( mock( Node.class ) );
 
-    expectedException.expect(IllegalStateException.class);
-    expectedException.expectMessage("The actual start node should not be null");
+        this.expectedException.expect( IllegalStateException.class );
+        this.expectedException.expectMessage( "The actual start node should not be null" );
 
-    assertThat(relationship).startsOrEndsWithNode(mock(Node.class));
-  }
+        assertThat( this.relationship ).startsOrEndsWithNode( mock( Node.class ) );
+    }
 
-  @Test
-  public void should_fail_if_relationship_end_node_is_null() {
-    given_relationship_starts_with_node(mock(Node.class));
+    @Test
+    public void should_fail_if_relationship_end_node_is_null() {
+        given_relationship_starts_with_node( mock( Node.class ) );
 
-    expectedException.expect(IllegalStateException.class);
-    expectedException.expectMessage("The actual end node should not be null");
+        this.expectedException.expect( IllegalStateException.class );
+        this.expectedException.expectMessage( "The actual end node should not be null" );
 
-    assertThat(relationship).startsOrEndsWithNode(mock(Node.class));
-  }
+        assertThat( this.relationship ).startsOrEndsWithNode( mock( Node.class ) );
+    }
 
-  @Test
-  public void should_fail_if_given_start_node_is_null() {
-    given_relationship_starts_with_node(mock(Node.class));
-    given_relationship_ends_with_node(mock(Node.class));
+    @Test
+    public void should_fail_if_given_start_node_is_null() {
+        given_relationship_starts_with_node( mock( Node.class ) );
+        given_relationship_ends_with_node( mock( Node.class ) );
 
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("The node to look for should not be null");
+        this.expectedException.expect( IllegalArgumentException.class );
+        this.expectedException.expectMessage( "The node to look for should not be null" );
 
-    assertThat(relationship).startsOrEndsWithNode(null);
-  }
+        assertThat( this.relationship ).startsOrEndsWithNode( null );
+    }
 
-  @Test
-  public void should_fail_if_relationship_does_NOT_start_or_end_with_given_node() {
-    given_relationship_starts_with_node(mock(Node.class));
-    given_relationship_ends_with_node(mock(Node.class));
+    public void should_fail_if_relationship_does_NOT_start_or_end_with_given_node() {
+        given_relationship_starts_with_node( mock( Node.class ) );
+        given_relationship_ends_with_node( mock( Node.class ) );
 
-    expectedException.expect(AssertionError.class);
-    expectedException.expectMessage(
-        String.format("Expecting relationship with ID: 42 and type: SOME_TYPE%nto either start or end with node:"));
+        this.expectedException.expect( AssertionError.class );
+        this.expectedException.expectMessage(
+                String.format( "Expecting relationship with ID: 42 and type: SOME_TYPE%nto either start or end with node:" ) );
 
-    assertThat(relationship).startsOrEndsWithNode(mock(Node.class));
-  }
+        assertThat( this.relationship ).startsOrEndsWithNode( mock( Node.class ) );
+    }
 
-  private void given_relationship_starts_with_node(Node node) {
-    when(relationship.getStartNode()).thenReturn(node);
-  }
+    private void given_relationship_starts_with_node( final Node node ) {
+        when( this.relationship.getStartNode() ).thenReturn( node );
+    }
 
-  private void given_relationship_ends_with_node(Node node) {
-    when(relationship.getEndNode()).thenReturn(node);
-  }
+    private void given_relationship_ends_with_node( final Node node ) {
+        when( this.relationship.getEndNode() ).thenReturn( node );
+    }
 
 }
